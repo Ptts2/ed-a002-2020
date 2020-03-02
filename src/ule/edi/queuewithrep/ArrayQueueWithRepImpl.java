@@ -30,21 +30,31 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 	///// ITERADOR //////////
 	@SuppressWarnings("hiding")
 	public class ArrayQueueWithRepIterator<T> implements Iterator<T> {
-
+		
+		private int count;
+		private int actual;
+		private T[] cola;
+		
+		@SuppressWarnings("unchecked")
 		public ArrayQueueWithRepIterator(ElemQueueWithRep<T>[] cola, int count) {
-
+			this.count = count;
+			this.actual = 0;
+			this.cola = (T[]) cola;
 		}
 
 		@Override
 		public boolean hasNext() {
-			//TODO
-			return false;
+			return actual < count;
 		}
 
 		@Override
 		public T next() {
-			//TODO
-			return null;
+			
+			if(!this.hasNext()) 
+				throw new NoSuchElementException();
+			
+			count++;
+			return cola[count-1];
 		}
 
 	}
@@ -79,9 +89,9 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 	public void add(T element, int times) {
 
 		if (element == null)
-			throw new NullPointerException("Elemento null");
+			throw new NullPointerException();
 		if (times <= 0)
-			throw new IllegalArgumentException("Times es negativo o 0");
+			throw new IllegalArgumentException();
 
 		boolean found = false;
 		int i = 0, firstEmptyPos = -1;
@@ -119,7 +129,7 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 	public void remove(T element, int times) {
 
 		if (element == null)
-			throw new NullPointerException("Elemento null");
+			throw new NullPointerException();
 
 		boolean found = false;
 		int i = 0;
@@ -129,21 +139,21 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 				if (this.data[i].num > times) {
 					this.data[i].num -= times;
 				} else {
-					throw new IllegalArgumentException("Numero de times incorrecto");
+					throw new IllegalArgumentException();
 				}
 			}
 			i++;
 		}
 
 		if (!found) {
-			throw new NoSuchElementException("El elemento no esta en la cola");
+			throw new NoSuchElementException();
 		}
 	}
 
 	@Override
 	public int remove() throws EmptyCollectionException {
 		if (this.data[0] == null)
-			throw new EmptyCollectionException("La lista esta vacía.");
+			throw new EmptyCollectionException("La cola esta vacia");
 		else {
 			int apariciones = this.data[0].num;
 
@@ -167,7 +177,7 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 	@Override
 	public boolean contains(T element) {
 		if (element == null)
-			throw new NullPointerException("Elemento null");
+			throw new NullPointerException();
 
 		boolean found = false;
 		int i = 0;
@@ -218,7 +228,7 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 	@Override
 	public int count(T element) {
 		if (element == null)
-			throw new NullPointerException("Elemento null");
+			throw new NullPointerException();
 
 		boolean found = false;
 		int i = 0, elements = 0;
@@ -239,8 +249,7 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 
 	@Override
 	public Iterator<T> iterator() {
-		// TODO
-		return null;
+		return new ArrayQueueWithRepIterator<T>(this.data, this.count) ;
 
 	}
 
@@ -251,9 +260,16 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 
 		buffer.append("(");
 
-		// TODO Ir añadiendo en buffer las cadenas para la representación de la cola.
+		// TODO Ir anyadiendo en buffer las cadenas para la representacion de la cola.
 		// Ejemplo: (A, A, A, B )
-
+		
+		for(int i = 0; i<this.data.length; i++) {
+			if(this.data[i] != null) {
+				buffer.append(this.data[i].elem.toString());
+				buffer.append(", ");
+			}
+		}
+		
 		buffer.append(")");
 
 		return buffer.toString();
