@@ -130,10 +130,13 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 
 		if (element == null)
 			throw new NullPointerException();
+		if (times < 0)
+			throw new IllegalArgumentException();
 
 		boolean found = false;
 		int i = 0;
 		while (!found && i < this.data.length) {
+			
 			if (this.data[i] != null && this.data[i].elem.equals(element)) {
 				found = true;
 				if (this.data[i].num > times) {
@@ -259,14 +262,14 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 		final StringBuffer buffer = new StringBuffer();
 
 		buffer.append("(");
-
-		// TODO Ir anyadiendo en buffer las cadenas para la representacion de la cola.
-		// Ejemplo: (A, A, A, B )
 		
 		for(int i = 0; i<this.data.length; i++) {
 			if(this.data[i] != null) {
-				buffer.append(this.data[i].elem.toString());
-				buffer.append(", ");
+				
+				for(int j = 0; j<this.data[i].num; j++) {
+					buffer.append(this.data[i].elem.toString()+" ");
+				}
+				
 			}
 		}
 		

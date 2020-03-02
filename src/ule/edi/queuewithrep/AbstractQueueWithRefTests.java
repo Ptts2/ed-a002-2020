@@ -75,7 +75,7 @@ public abstract class AbstractQueueWithRefTests {
 	@Test
 	//Se pueden eliminar cero instancias de un elemento con remove(x, 0): ")
 	public void testRemoveZeroInstances() {
-		S1.remove("ABC", 0);
+		S2.remove("ABC", 0);
 	}
 	
 	// TODO AÑADIR MAS TESTS
