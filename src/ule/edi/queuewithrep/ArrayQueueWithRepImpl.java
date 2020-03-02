@@ -65,6 +65,12 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 	
 			@Override
 			public void add(T element, int times) {
+				
+				if(element == null)
+					throw new NullPointerException("Elemento null");
+				if(times<=0)
+					throw new IllegalArgumentException("Times es negativo o 0");
+				
 				boolean found = false;
 				int i = 0, firstEmptyPos = -1;
 				
@@ -107,49 +113,138 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 
 			@Override
 			public void add(T element) {
-				
+				this.add(element, 1);
 			}
 
 			@Override
 			public void remove(T element, int times)  {
-		
+				
+				if(element == null)
+					throw new NullPointerException("Elemento null");
+				
+				boolean found = false;
+				int i = 0;
+				while(!found && i<this.data.length)
+				{
+
+					if(this.data[i] != null && this.data[i].elem.equals(element))
+					{
+						found = true;
+						if(this.data[i].num > times) {
+							this.data[i].num -= times;
+						}else {
+							throw new IllegalArgumentException("Numero de times incorrecto");
+						}
+					}
+
+					i++;
+				}
+				
+				//if(!found) {
+					//throw new NoSuchElementException("El elemento no esta en la cola");
+				//}
+				
 			}
 
 			@Override
 			public int remove() throws EmptyCollectionException {
-				return 0;
-				//TODO		
+				
+				if(this.data[0]==null)
+					throw new EmptyCollectionException("La lista esta vacía.");
+				else 
+				{
+					int apariciones = this.data[0].num;
+					
+					for(int i = 1; i < this.data.length; i++)
+					{
+						this.data[i] = this.data[i-1];
+					}
+					this.data[this.data.length] = null;
+					return apariciones;
+				}
 			}
 
 			@Override
 			public void clear() {
-				//TODO
+				
+				for(int i = 0; i<this.data.length; i++) {
+					this.data[i] = null;
+				}
+				
 			}
 			
 
 			@Override
 			public boolean contains(T element) {
-				//TODO
-return false;
+				
+				if(element == null)
+					throw new NullPointerException("Elemento null");
+				
+				boolean found = false;
+				int i = 0;
+				
+				while(!found && i<this.data.length){
+					
+					if(this.data[i]!= null && this.data[i].elem.equals(element)) {
+						found = true;
+					}
+					
+					i++;
+				}
+				
+				return found;
 			}
 
 			@Override
 			public boolean isEmpty() {
-				// TODO Auto-generated method stub
-			return false;
+				boolean empty = true;
+				int i = 0;
+				
+				while(empty && i < this.data.length) {
+					
+					if(this.data[i]!=null) {
+						empty = false;
+					}
+					i++;
+				}
+				
+				return empty;
 			}
 
 			@Override
 			public long size() {
-				// TODO Auto-generated method stub
-			 return 0;
+				
+				long size = 0;
+				for(int i = 0; i<this.data.length; i++) {
+					
+					if(this.data[i] != null) {
+						size += this.data[i].num; 
+					}
+				}
+			 return size;
 			 
 			}
 
 			@Override
 			public int count(T element) {
-				// TODO Auto-generated method stub
-			return 0;
+				
+				if(element == null)
+					throw new NullPointerException("Elemento null");
+				
+				boolean found = false;
+				int i = 0, elements = 0;
+				
+				while(!found && i<this.data.length){
+					
+					if(this.data[i]!= null && this.data[i].elem.equals(element)) {
+						found = true;
+						elements = this.data[i].num;
+					}
+					
+					i++;
+				}
+				
+				return elements;
 		          
 			}
 
