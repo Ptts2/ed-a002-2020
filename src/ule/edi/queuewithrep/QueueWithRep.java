@@ -112,8 +112,8 @@ import ule.edi.exceptions.EmptyCollectionException;
 		 * 
 		 * Se admite solamente un número de instancias menor del que hay
 		 * en la cola; e.g. si inicialmente se tiene ("ABC"(2))
-		 * y se sacan 8 instancias de "ABC", se queda como estaba, es decir no
-		 * elimina nada
+		 * y se sacan 8 instancias de "ABC", se queda como estaba, y lanza
+		 * la excepción IllegalArgumentException
 		 * 
 		 * @param element elemento a sacar de esta cola
 		 * @param times número de instancias a sacar
