@@ -44,7 +44,7 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 
 		@Override
 		public boolean hasNext() {
-			return actual < count;
+			return (this.actual < this.count);
 		}
 
 		@Override
@@ -53,8 +53,8 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 			if(!this.hasNext()) 
 				throw new NoSuchElementException();
 			
-			count++;
-			return cola[count-1];
+			this.actual++;
+			return this.cola[count-1];
 		}
 
 	}
@@ -116,7 +116,7 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 				expandCapacity();
 			}
 			this.data[firstEmptyPos] = new ElemQueueWithRep<T>(element, times);
-			count++;
+			this.count++;
 		}
 	}
 
@@ -164,6 +164,7 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 				this.data[i] = this.data[i - 1];
 			}
 			this.data[this.data.length] = null;
+			this.count--;
 			return apariciones;
 		}
 
@@ -174,7 +175,7 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 		for (int i = 0; i < this.data.length; i++) {
 			this.data[i] = null;
 		}
-
+		this.count = 0;
 	}
 
 	@Override
