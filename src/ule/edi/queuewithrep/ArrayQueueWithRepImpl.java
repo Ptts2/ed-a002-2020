@@ -33,7 +33,7 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 		
 		private final int count;
 		private int actual;
-		private int elemActual;
+		private int actualQty;
 		private ElemQueueWithRep<T>[] cola;
 		
 		public ArrayQueueWithRepIterator(ElemQueueWithRep<T>[] cola, int count) {
@@ -42,7 +42,7 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 			this.cola = cola;
 			
 			if(this.cola[actual]!=null) {
-				this.elemActual = this.cola[actual].num;
+				this.actualQty = this.cola[actual].num;
 			}
 			
 		}
@@ -50,7 +50,7 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 		@Override
 		public boolean hasNext() {
 			
-			if( this.elemActual == 0 && this.actual+1 >= this.count ) {
+			if( this.actualQty == 0 && this.actual+1 >= this.count ) {
 				return false;
 			}else if(this.actual >= this.count) {
 				return false;
@@ -64,14 +64,14 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 			if(!this.hasNext()) 
 				throw new NoSuchElementException();
 			
-			if(this.elemActual == 0) {
+			if(this.actualQty == 0) {
 				this.actual++;
 				if(this.cola[this.actual]!=null) {
-					this.elemActual = this.cola[this.actual].num;
+					this.actualQty = this.cola[this.actual].num;
 				}
 			}
 			
-			this.elemActual--;
+			this.actualQty--;
 			return this.cola[actual].elem;
 		}
 
