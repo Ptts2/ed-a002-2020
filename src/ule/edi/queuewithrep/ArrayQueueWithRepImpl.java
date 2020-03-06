@@ -69,7 +69,7 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 				throw new NoSuchElementException();
 			
 			this.elemActual--;
-			return (T) this.cola[actual];
+			return (T) this.cola[actual].elem;
 		}
 
 	}
