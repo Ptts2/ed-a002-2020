@@ -91,11 +91,13 @@ public class LinkedQueueWithRepImpl<T> implements QueueWithRep<T> {
 		if (times <= 0)
 			throw new IllegalArgumentException();
 
-		if (this.front == null) {
+		if (this.isEmpty()) {
 			this.front = new QueueWithRepNode<T>(element, times);
 			front.next = null;
 			this.count++;
+			
 		} else {
+				
 			QueueWithRepNode<T> aux = this.front;
 			boolean found = false;
 			while (!found & aux != null) {
@@ -107,14 +109,14 @@ public class LinkedQueueWithRepImpl<T> implements QueueWithRep<T> {
 
 				aux = aux.next;
 			}
-
+			
 			if (!found) {
-				aux = front;
-				while (aux != null) {
+				aux = this.front;
+				while (aux.next != null) {
 					aux = aux.next;
 				}
-				aux = new QueueWithRepNode<T>(element, times);
-				aux.next = null;
+				aux.next = new QueueWithRepNode<T>(element, times);
+				aux.next.next = null;
 				this.count++;
 			}
 
@@ -263,5 +265,7 @@ public class LinkedQueueWithRepImpl<T> implements QueueWithRep<T> {
 		buffer.append(")");
 		return buffer.toString();
 	}
+	
+
 
 }
