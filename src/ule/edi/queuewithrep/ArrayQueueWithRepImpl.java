@@ -53,8 +53,6 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 			
 			if( this.actualQty == 0 && this.actual+1 >= this.count ) {
 				return false;
-			}else if(this.actual >= this.count) {
-				return false;
 			}
 			return true;
 		}
@@ -176,11 +174,11 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 			throw new EmptyCollectionException("La cola esta vacia");
 		else {
 			int apariciones = this.data[0].num;
-
-			for (int i = 1; i < this.data.length; i++) {
-				this.data[i] = this.data[i - 1];
+			
+			for (int i = 0; i < this.data.length-1; i++) {
+				this.data[i] = this.data[i + 1];
 			}
-			this.data[this.data.length] = null;
+			this.data[this.data.length-1] = null;
 			this.count--;
 			return apariciones;
 		}

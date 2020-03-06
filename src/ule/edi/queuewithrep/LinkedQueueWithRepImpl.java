@@ -45,7 +45,7 @@ public class LinkedQueueWithRepImpl<T> implements QueueWithRep<T> {
 		@Override
 		public boolean hasNext() {
 			
-			if( this.nodeQty == 0 && this.nodo.next == null ) {
+			if( this.nodeQty == 0 && (this.nodo==null || this.nodo.next == null) ) {
 				return false;
 			}
 			return true;
