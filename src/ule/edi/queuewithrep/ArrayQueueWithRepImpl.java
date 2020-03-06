@@ -31,30 +31,45 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 	@SuppressWarnings("hiding")
 	public class ArrayQueueWithRepIterator<T> implements Iterator<T> {
 		
-		private int count;
+		private final int count;
 		private int actual;
-		private T[] cola;
+		private int elemActual;
+		private ElemQueueWithRep<T>[] cola;
 		
 		@SuppressWarnings("unchecked")
 		public ArrayQueueWithRepIterator(ElemQueueWithRep<T>[] cola, int count) {
 			this.count = count;
 			this.actual = 0;
-			this.cola = (T[]) cola;
+			this.cola = cola;
+			
+			if(this.cola[actual]!=null) {
+				this.elemActual = this.cola[actual].num;
+			}
+			
 		}
 
 		@Override
 		public boolean hasNext() {
+			
 			return (this.actual < this.count);
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public T next() {
+			
+			if(this.elemActual == 0) {
+				this.actual++;
+				if(this.cola[this.actual]!=null) {
+					this.elemActual = this.cola[this.actual].num;
+				}
+			}
 			
 			if(!this.hasNext()) 
 				throw new NoSuchElementException();
 			
-			this.actual++;
-			return this.cola[count-1];
+			this.elemActual--;
+			return (T) this.cola[actual];
 		}
 
 	}
