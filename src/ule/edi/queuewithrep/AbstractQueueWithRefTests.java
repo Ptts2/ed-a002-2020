@@ -81,18 +81,25 @@ public abstract class AbstractQueueWithRefTests {
 	@Test
 	public void testIterator() {
 		
-		Iterator<String> iterador = S2.iterator();
-		for(int i = 0; i<5;i++) {
-			Assert.assertTrue((iterador.next()).equals("ABC"));
-		}
-		for(int i = 0; i<5;i++) {
-			Assert.assertTrue((iterador.next()).equals("123"));
-		}
-		for(int i = 0; i<10;i++) {
-			Assert.assertTrue((iterador.next()).equals("XYZ"));
-		}
+		S1.add("ABC", 5);
+		S1.add("XYZ", 5);
+		int ABCs = 0;
+		int XYZs = 0;
+		Iterator<String> iterador = S1.iterator();
 		
+		Assert.assertTrue(iterador.hasNext());
+		while(iterador.hasNext()) {
+			if(ABCs < 5) {
+				Assert.assertTrue(iterador.next().equals("ABC"));
+				ABCs++;
+			}else {
+				Assert.assertTrue(iterador.next().equals("XYZ"));
+				XYZs++;
+			}
+		}
 		Assert.assertFalse(iterador.hasNext());
+		Assert.assertTrue(ABCs == 5);
+		Assert.assertTrue(XYZs == 5);
 	}
 	
 	

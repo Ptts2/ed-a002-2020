@@ -36,7 +36,6 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 		private int elemActual;
 		private ElemQueueWithRep<T>[] cola;
 		
-		@SuppressWarnings("unchecked")
 		public ArrayQueueWithRepIterator(ElemQueueWithRep<T>[] cola, int count) {
 			this.count = count;
 			this.actual = 0;
@@ -51,12 +50,19 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 		@Override
 		public boolean hasNext() {
 			
-			return (this.actual < this.count);
+			if( this.elemActual == 0 && this.actual+1 >= this.count ) {
+				return false;
+			}else if(this.actual >= this.count) {
+				return false;
+			}
+			return true;
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public T next() {
+			
+			if(!this.hasNext()) 
+				throw new NoSuchElementException();
 			
 			if(this.elemActual == 0) {
 				this.actual++;
@@ -65,11 +71,8 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 				}
 			}
 			
-			if(!this.hasNext()) 
-				throw new NoSuchElementException();
-			
 			this.elemActual--;
-			return (T) this.cola[actual].elem;
+			return this.cola[actual].elem;
 		}
 
 	}
