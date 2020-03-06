@@ -39,6 +39,7 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 		public ArrayQueueWithRepIterator(ElemQueueWithRep<T>[] cola, int count) {
 			this.count = count;
 			this.actual = 0;
+			this.actualQty = 0;
 			this.cola = cola;
 			
 			if(this.cola[actual]!=null) {
@@ -66,13 +67,11 @@ public class ArrayQueueWithRepImpl<T> implements QueueWithRep<T> {
 			
 			if(this.actualQty == 0) {
 				this.actual++;
-				if(this.cola[this.actual]!=null) {
-					this.actualQty = this.cola[this.actual].num;
-				}
+				this.actualQty = this.cola[this.actual].num;	
 			}
 			
 			this.actualQty--;
-			return this.cola[actual].elem;
+			return this.cola[this.actual].elem;
 		}
 
 	}
