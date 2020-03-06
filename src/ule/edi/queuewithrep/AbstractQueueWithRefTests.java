@@ -78,7 +78,22 @@ public abstract class AbstractQueueWithRefTests {
 		S2.remove("ABC", 0);
 	}
 	
-	// TODO AÑADIR MAS TESTS
+	@Test
+	public void testIterator() {
+		
+		Iterator<String> iterador = S2.iterator();
+		for(int i = 0; i<5;i++) {
+			Assert.assertTrue((iterador.next()).equals("ABC"));
+		}
+		for(int i = 0; i<5;i++) {
+			Assert.assertTrue((iterador.next()).equals("123"));
+		}
+		for(int i = 0; i<10;i++) {
+			Assert.assertTrue((iterador.next()).equals("XYZ"));
+		}
+		
+		Assert.assertFalse(iterador.hasNext());
+	}
 	
 	
 	
