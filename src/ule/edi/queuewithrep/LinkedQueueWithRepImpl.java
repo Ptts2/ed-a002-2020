@@ -30,13 +30,14 @@ public class LinkedQueueWithRepImpl<T> implements QueueWithRep<T> {
 	public class LinkedQueueWithRepIterator<T> implements Iterator<T> {
 		
 		private QueueWithRepNode<T> nodo;
-		private int nodeElem;
+		private int nodeQty;
 
 		public LinkedQueueWithRepIterator(QueueWithRepNode<T> nodo) {
 			this.nodo = nodo;
+			this.nodeQty = 0;
 			
 			if(nodo!=null) {
-				this.nodeElem = nodo.num;
+				this.nodeQty = this.nodo.num;
 			}
 
 		}
@@ -44,25 +45,27 @@ public class LinkedQueueWithRepImpl<T> implements QueueWithRep<T> {
 		@Override
 		public boolean hasNext() {
 			
-			return nodo.next!=null;
+			if( this.nodeQty == 0 && this.nodo.next == null ) {
+				return false;
+			}
+			return true;
+			
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public T next() {
-					
-			if(this.nodeElem == 0) {
-				this.nodo = nodo.next;
-				if(this.nodo!=null) {
-					this.nodeElem = this.nodo.num;
-				}
-			}
-			
+				
 			if(!this.hasNext()) 
 				throw new NoSuchElementException();
 			
-			this.nodeElem--;
-			return (T) nodo;
+			if(this.nodeQty == 0) {
+				this.nodo = this.nodo.next;
+				this.nodeQty = this.nodo.num;
+				
+			}
+			
+			this.nodeQty--;
+			return this.nodo.elem;
 		}
 
 	}
